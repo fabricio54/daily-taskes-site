@@ -10,15 +10,15 @@
     // criando uma constante que recebe o a execução do express
     const app = express();
     // criando uma constante com o mesmo no nome do arquivo
-    const admin = require('./src/routes/admin');
+    const admin = require('./routes/admin');
     // session
     const session = require('express-session');
     // flash
     const flash = require('connect-flash');
     // rota usuarios
-    const usuarios = require('./src/routes/usuarios');
+    const usuarios = require('./routes/usuarios');
     const passport = require("passport")
-    require('./src/middlewares/autenticar')(passport)
+    require('./middlewares/autenticar')(passport)
 
 // configurações
     // sessão
