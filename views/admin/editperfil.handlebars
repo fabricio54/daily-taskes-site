@@ -1,0 +1,14 @@
+<div style="text-align:center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMzOqHK09HqrHoJuUpMT2x22IVO7neezMEa_46juyvqbjvZzLtloG0rwjXU8ZBGZ1A_EY&usqp=CAU" alt="img-agenda" style="border-radius: 50%; margin-top: 50px;margin-bottom:20px"></div>
+<div class="card">
+    <div class="card-body">
+        <form action="/admin/tarefas/edit/perfil/{{user.id}}" method="post">
+            <label for="nome">Nome: </label>
+                <input type="text" name="nome" id="nome" class="form-control" value="{{user.nome}}">
+            <label for="email">Email: </label>
+                <input type="email" name="email" id="email" class="form-control" value="{{user.email}}">
+                <br>
+            <button class="btn btn-success" type="submit
+            ">Salvar</button>
+        </form>
+    </div>
+</div>

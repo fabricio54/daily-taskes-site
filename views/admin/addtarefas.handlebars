@@ -1,0 +1,22 @@
+<div style="text-align:center">
+    {{#each erros}}
+    <div class="alert alert-danger">{{text}}</div>
+    {{else}}
+
+    {{/each}}
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMzOqHK09HqrHoJuUpMT2x22IVO7neezMEa_46juyvqbjvZzLtloG0rwjXU8ZBGZ1A_EY&usqp=CAU" alt="img-agenda" style="border-radius: 50%; margin-top: 50px";></div>
+<div class="card">
+    <div class="card-body">
+    <form action="/admin/tarefas/nova" method="POST">
+        <label for="nome">Nome: </label>
+            <input type="text" id="nome" name="nome" placeholder="Nome da tarefa" class="form-control">
+        <input type="hidden" name="email" id="email" value="{{user.email}}">
+        <label for="descricao">Descrição: </label>
+            <input type="text" id="descricao" name="descricao" placeholder="descricao tarefa" class="form-control">
+        <label for="prazo">Tempo estimado: </label>
+            <input type="text" id="prazo" name="prazo" placeholder="ex: 11:00:00 a 14:00:00" class="form-control">
+        <br>
+        <button type="submit"class="btn btn-success" >Criar Categoria</button>
+    </form>
+    </div>
+</div>

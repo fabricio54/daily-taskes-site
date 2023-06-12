@@ -1,0 +1,24 @@
+{{#each erros}}
+    <div class="alert alert-danger">{{text}}</div>
+    {{else}}
+
+{{/each}}
+<div style="text-align:center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMzOqHK09HqrHoJuUpMT2x22IVO7neezMEa_46juyvqbjvZzLtloG0rwjXU8ZBGZ1A_EY&usqp=CAU" alt="img-agenda" style="border-radius: 50%;margin-top: 50px"></div>
+<br>
+<div class="card">
+    <div class="card-body">
+        <form action="/usuarios/registro" method="post">
+            <label for="nome">Nome: </label>
+                <input type="text" name="nome" class="form-control" required>
+            <label for="email">Email: </label>
+                <input type="email" name="email" class="form-control" required>
+            <label for="">Senha: </label>
+                <input type="password" name="senha" class="form-control" required>
+            <label for="senha2">Informe a senha novamente: </label>
+                <input type="password" name="senha2" class="form-control"required>
+            <br>
+            <button type="submit" class="btn btn-success mt-4">Criar conta</button>
+        </form>
+        
+    </div>
+</div>

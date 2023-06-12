@@ -1,0 +1,27 @@
+{{#each erros}}
+    <div style="margin-top: 100px"class="alert alert-danger">{{text}}</div>
+    {{else}}
+{{/each}}
+<div style="text-align:center">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMzOqHK09HqrHoJuUpMT2x22IVO7neezMEa_46juyvqbjvZzLtloG0rwjXU8ZBGZ1A_EY&usqp=CAU" alt="img-agenda" style="border-radius: 50%; margin-top: 50px";></div>
+<br>
+<h2 style="color: white">Lista de Tarefas</h2>
+<hr>
+<a href="/admin/tarefas/add/{{user.id}}"><button class="btn btn-success">Nova Tarefa</button></a>
+
+{{#each usuarios}}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h4>{{nome}}</h4>
+            <small><strong>Descrição:</strong>  {{descricao}}</small><br>
+            <small><strong>Tempo estimado: </strong>{{data}}</small><br>
+            <small><strong>Status: </strong><small>{{status}}</small></small>
+            <br>
+            <a href="/admin/tarefas/edit/{{_id}}/{{email}}"><button class="btn btn-success mt-4">Editar tarefa</button></a> <a href="/admin/tarefas/concluida/{{_id}}/{{email}}">
+            <button class="btn btn-success mt-4">Tarefa concluida</button></a>
+            <a href="/admin/tarefas/excluir/{{_id}}/{{email}}"><button class="btn btn-danger mt-4">Excluir tarefa</button></a>
+        </div>
+    </div>
+{{else}}
+
+{{/each}}
