@@ -55,42 +55,42 @@
         router.post("/registro", async(req, res) => {
             let erros = []
 
-        if(!req.body.nome || req.body.nome === null || typeof req.body.nome === undefined) {
-        erros.push({text: "Nome inválido"})
-        }
+            if(!req.body.nome || req.body.nome === null || typeof req.body.nome === undefined) {
+            erros.push({text: "Nome inválido"})
+            }
 
-        if(!req.body.email || req.body.email === null || typeof req.body.email === undefined) {
-        erros.push({text: "E-mail inválido"})
-        }
+            if(!req.body.email || req.body.email === null || typeof req.body.email === undefined) {
+            erros.push({text: "E-mail inválido"})
+            }
 
-        if(!req.body.senha || req.body.senha === null || typeof req.body.senha === undefined) {
-        erros.push({text: "Senha inválido"})
-        }
+            if(!req.body.senha || req.body.senha === null || typeof req.body.senha === undefined) {
+            erros.push({text: "Senha inválido"})
+            }
 
-        if(req.body.senha.length < 6 || req.body.senha.length > 12) {
-        erros.push({text: "Senha deve ter entre 6 a 12 caracters"})
-        }
+            if(req.body.senha.length < 6 || req.body.senha.length > 12) {
+            erros.push({text: "Senha deve ter entre 6 a 12 caracters"})
+            }
 
-        if(req.body.senha !== req.body.senha2) {
-        erros.push({text: "Senha diferente de confirmar senha"})
-        }
+            if(req.body.senha !== req.body.senha2) {
+            erros.push({text: "Senha diferente de confirmar senha"})
+            }
 
-        if(erros.length > 0) {
-        res.render("usuarios/usuario", {erros: erros})
-        }else {
-            Usuario.findOne({email: req.body.email}).then((usuario) => {
-                if(usuario){
-                    req.flash("error_msg", "Já existe uma conta com este e-mail no sistema")
-                    res.redirect("/usuarios/registro")
-                }else{
-                    const novoUsuario = new Usuario({
-                        nome: req.body.nome,
-                        email: req.body.email,
-                        senha: req.body.senha
-                    })
+            if(erros.length > 0) {
+            res.render("usuarios/usuario", {erros: erros})
+            }else {
+                Usuario.findOne({email: req.body.email}).then((usuario) => {
+                    if(usuario){
+                        req.flash("error_msg", "Já existe uma conta com este e-mail no sistema")
+                        res.redirect("/usuarios/registro")
+                    }else{
+                        const novoUsuario = new Usuario({
+                            nome: req.body.nome,
+                            email: req.body.email,
+                            senha: req.body.senha
+                        })
 
-                    bcrypt.genSalt(10, (erro, salt) => {
-                        bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
+                        bcrypt.genSalt(10, (erro, salt) => {
+                            bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
                             if(erro){
                                 req.flash("error_msg", "Houve um erro ao salvar usuário")
                                 res.redirect("/")
@@ -160,7 +160,7 @@
 
         else {
             Usuario.findOne({email: req.body.email}).then((usuario) => {
-                console.log(usuario.email)
+                
                 usuario.senha = req.body.senha
 
                 bcrypt.genSalt(10, (erro, salt) => {

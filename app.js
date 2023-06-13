@@ -54,15 +54,19 @@
         // configuração visualização e o arquivo que é utilizado
         app.set('view engine', 'handlebars');
     // mongoose
+    /*
         const connectDatabase = () => {
             console.log("wait connecting to the database");
     
             mongoose.connect("mongodb+srv://fabricio:Kpnu8UWH0VorAJcd@cluster0.xv0badm.mongodb.net/?retryWrites=true&w=majority", {useNewUrlParser: true, useUnifiedTopology: true}).then(() => console.log("Mongo Atlas Connected")).catch((error) => console.log(error));
-    }
+    }*/
 
+    /*
+        const database = require("./src/database/conect");
+        database()
         // executando a conexão
-        connectDatabase();
-    
+        //connectDatabase();
+    */
     // public
         // midlewares: será o meio termo entre todas as requisições e respostas que averá entre o servidor e o cliente
         app.use((req, res, next) => {
@@ -81,8 +85,4 @@
     app.use('/admin', admin);
     app.use("/usuarios", usuarios);
 
-// Outros
-const port =  process.env.port ||3000;
-app.listen(port, () => {
-    console.log('Servidor Rodando na porta 3000');
-})
+module.exports = app;
