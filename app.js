@@ -70,7 +70,7 @@
     // public
         // midlewares: será o meio termo entre todas as requisições e respostas que averá entre o servidor e o cliente
         app.use((req, res, next) => {
-            console.log("Oi eu sou um midleware!");
+            console.log("requisição feita!");
             next();
         })
 

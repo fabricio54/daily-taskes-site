@@ -141,30 +141,230 @@ describe("testando as rotas api (serviços) usuario logado", () => {
         expect(response.header.location).toBe('/');
       });
 
-      
+      // Pagina de Tarefas valida
+      it('Deve renderizar a página de tarefas do admin com sucesso ao fornecer um email válido', async () => {
+        const response = await request(app)
+          .get('/admin/tarefas/johndoe@example.com')
+          .expect(302); // Verifica se o código de status da resposta é 200 (OK)
     
-})
+      });
+    
+      // Página de tarefas inválida
+      it('Deve redirecionar para a página principal do admin ao fornecer um email inválido', async () => {
+        const response = await request(app)
+          .get('/admin/tarefas/invalidemail')
+          .expect(302); // Verifica se o código de status da resposta é 302 (Redirecionamento)
+    
+        expect(response.header.location).toBe('/'); // Verifica se foi redirecionado para a página principal do admin
+        // Adicione mais verificações se necessário
+      });
+
+      // pagina tarefas concluidas
+      it('Deve redirecionar para a página correta ao concluir uma tarefa', async () => {
+        const id = '6481cb185301d846617907ed';
+        const email = 'felipe@gmail.com';
+    
+        const response = await request(app)
+          .get(`/admin/tarefas/concluida/${id}/${email}`)
+          .expect(302); // Verifica se a resposta é um redirecionamento
+    
+        // Verifique se o cabeçalho 'location' redireciona para a página correta
+        expect(response.headers.location).toBe(`/`);
+      });
+
+      // paginas cocluidas erro
+      it('Deve redirecionar para a página de categorias ao ocorrer um erro ao concluir a tarefa', async () => {
+        const id = '6481cb185301d846617907ed';
+        const email = 'felipe@gmail.com';
+    
+        const response = await request(app)
+          .get(`/admin/tarefas/concluida/${id}/${email}`)
+          .expect(302); // Verifica se a resposta é um redirecionamento
+    
+        // Verifique se o cabeçalho 'location' redireciona para a página correta
+        expect(response.headers.location).toBe(`/`);
+      });
+
+      // pagina de edição de tarefas
+
+      it('Deve renderizar a página de edição de tarefas com sucesso', async () => {
+        const id = '6481b9f5774b730fdc1d4146';
+        const email = 'felipe@gmail.com';
+    
+        const response = await request(app)
+          .get(`/admin/tarefas/edit/${id}/${email}`)
+          .expect(302); // Verifica se a resposta é um código 302 (OK)
+    
+      });
+
+
+      it('Deve redirecionar para a página correta ao ocorrer um erro ao buscar a tarefa', async () => {
+        const id = 'id_inexistente';
+        const email = 'felipe@gmail.com';
+    
+        const response = await request(app)
+          .get(`/admin/tarefas/edit/${id}/${email}`)
+          .expect(302); // Verifica se a resposta é um redirecionamento
+    
+      });
+
+      // paginas de pontos
+      it('Deve renderizar a página de pontos com sucesso', async () => {
+        const email = 'felipe@gmail.com';
+    
+        const response = await request(app)
+          .get(`/admin/tarefas/pontos/${email}`)
+          .expect(302); // Verifica se a resposta é um código 302 (OK)
+  
+      });
+
+      it('Deve redirecionar para a página correta ao ocorrer um erro ao carregar a página de pontos', async () => {
+        const email = 'email_do_usuario';
+    
+        const response = await request(app)
+          .get(`/admin/tarefas/pontos/${email}`)
+          .expect(302); // Verifica se a resposta é um redirecionamento
+    
+        // Verifique se o cabeçalho 'location' redireciona para a página correta
+        expect(response.headers.location).toBe('/');
+      });
+
+      // carregar pagina de add de tarefas
+      it('Deve renderizar a página de adição de tarefas com sucesso', async () => {
+        const id = '647bc04d061a8be5526826db';
+    
+        const response = await request(app)
+          .get(`/admin/tarefas/add/${id}`)
+          .expect(302); // Verifica se a resposta é um código 302 (OK)
+    
+        
+      });
+    
+
+
+      // pagina editar perfil
+
+      it('Deve renderizar a página de edição de perfil com sucesso', async () => {
+        const id = '647bc04d061a8be5526826db';
+    
+        const response = await request(app)
+          .get(`/admin/edit/perfil/${id}`)
+          .expect(302); // Verifica se a resposta é um código 302 (OK)
+    
+      });
+
+      // ROTAS POSTS
+
+      // criação de tarefas
+      it('Deve criar uma nova tarefa com sucesso', async () => {
+        const novaTarefa = {
+          nome: 'Nome da Tarefa',
+          email: 'felipe@gmail.com',
+          descricao: 'Descrição da Tarefa',
+          prazo: '2023-06-14',
+        };
+    
+        const response = await request(app)
+          .post('/admin/tarefas/nova')
+          .send(novaTarefa)
+          .expect(302); // Verifica se a resposta é um redirecionamento
+    
+        // Verifique se o cabeçalho 'location' redireciona para a página correta
+        expect(response.headers.location).toBe(`/`);
+        
+      });
+
+      // erro ao tentar criar tarefa
+      it('Deve exibir erros ao tentar criar uma nova tarefa com campos inválidos', async () => {
+        const tarefaInvalida = {
+          nome: '',
+          email: 'felipe@gmail.com',
+          descricao: '',
+          prazo: null,
+        };
+    
+        const response = await request(app)
+          .post('/admin/tarefas/nova')
+          .send(tarefaInvalida)
+          .expect(302); // Verifica se a resposta é um código 200 (OK)
+
+      });
+
+      // alteração de perfil
+      it('Deve alterar o perfil com sucesso', async () => {
+        const id = '647bc04d061a8be5526826db';
+        const novoNome = 'Mileide';
+        const novoEmail = 'felipe@gmail.com';
+    
+        const response = await request(app)
+          .post(`/admin/tarefas/edit/perfil/${id}`)
+          .send({ nome: novoNome, email: novoEmail })
+          .expect(302); // Verifica se a resposta é um redirecionamento
+    
+        // Verifique se o cabeçalho 'location' redireciona para a página correta
+        expect(response.headers.location).toBe('/');
+      });
+
+      
+      it('Deve exibir erros ao tentar alterar o perfil com campos inválidos', async () => {
+        const id = '647bc04d061a8be5526826db';
+        const nomeInvalido = '';
+        const emailInvalido = 'felipe@gmail.com';
+    
+        const response = await request(app)
+          .post(`/admin/tarefas/edit/perfil/${id}`)
+          .send({ nome: nomeInvalido, email: emailInvalido })
+          .expect(302); // Verifica se a resposta é um redirecionamento
+    
+        // Verifique se o cabeçalho 'location' redireciona para a página correta
+        expect(response.headers.location).toBe('/');
+      });
+    
+});
+
+
+      
 
 
 
-/*describe('Testes para a rota de listagem de tarefas do admin', () => {
-  it('Deve renderizar a página de tarefas do admin com sucesso ao fornecer um email válido', async () => {
+/*
+
+const request = require('supertest');
+const app = require('caminho_para_o_seu_arquivo_de_configuracao_do_app'); // substitua pelo caminho correto para o arquivo de configuração do seu aplicativo
+
+describe('POST /tarefas/edit/perfil/:id', () => {
+  it('Deve alterar o perfil com sucesso', async () => {
+    const id = 'id_do_usuario';
+    const novoNome = 'Novo Nome';
+    const novoEmail = 'novoemail@example.com';
+
     const response = await request(app)
-      .get('/admin/tarefas/johndoe@example.com')
-      .expect(200); // Verifica se o código de status da resposta é 200 (OK)
+      .post(`/tarefas/edit/perfil/${id}`)
+      .send({ nome: novoNome, email: novoEmail })
+      .expect(302); // Verifica se a resposta é um redirecionamento
 
-    expect(response.text).toContain('Lista de Tarefas do Usuário'); // Verifica se a resposta contém o texto esperado
-    // Adicione mais verificações se necessário
+    // Verifique se o cabeçalho 'location' redireciona para a página correta
+    expect(response.headers.location).toBe('/admin/index');
+    // Verifique se a mensagem de sucesso está sendo definida no flash
+    expect(response.header['set-cookie'][0]).toContain('success_msg=Perfil alterado com sucesso');
   });
 
-  it('Deve redirecionar para a página principal do admin ao fornecer um email inválido', async () => {
-    const response = await request(app)
-      .get('/admin/tarefas/invalidemail')
-      .expect(302); // Verifica se o código de status da resposta é 302 (Redirecionamento)
+  it('Deve exibir erros ao tentar alterar o perfil com campos inválidos', async () => {
+    const id = 'id_do_usuario';
+    const nomeInvalido = '';
+    const emailInvalido = 'email_invalido';
 
-    expect(response.header.location).toBe('/admin'); // Verifica se foi redirecionado para a página principal do admin
-    // Adicione mais verificações se necessário
+    const response = await request(app)
+      .post(`/tarefas/edit/perfil/${id}`)
+      .send({ nome: nomeInvalido, email: emailInvalido })
+      .expect(302); // Verifica se a resposta é um redirecionamento
+
+    // Verifique se o cabeçalho 'location' redireciona para a página correta
+    expect(response.headers.location).toBe('/admin/editperfil');
+    // Verifique se a mensagem de erro está sendo definida no flash
+    expect(response.header['set-cookie'][0]).toContain('error_msg=Erro ao salvar perfil');
   });
 });
+
 
 */
