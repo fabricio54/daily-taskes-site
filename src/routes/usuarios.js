@@ -127,9 +127,8 @@
     })
 
     // pegar email do usuário
-    router.post("/esqueceusenha/:email", async(req, res) => {
+    router.post("/esqueceusenha", async(req, res) => {
         const conta = await Usuario.findOne({email: req.body.email});
-        console.log(req.body.email)
         if(conta) {
             req.flash("success_msg", "Email existe no sistema");
             res.render("usuarios/senha", { email: req.body.email});

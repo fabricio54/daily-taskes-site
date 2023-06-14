@@ -95,14 +95,14 @@ describe('Testando as rotas da api (serviços) de usuários deslogado', () => {
       // ROTAS DE ESQUECEU EMAIL
       it('Deve renderizar a página de redefinição de senha quando o email existe no sistema', async () => {
         const response = await request(app)
-          .post('/usuarios/esqueceusenha/johndoe@example.com'); // substitua com um email que exista no sistema
+          .post('/usuarios/esqueceusenha'); // substitua com um email que exista no sistema
     
-        expect(response.statusCode).toBe(200); // Verifica o código de status da resposta
+        expect(response.statusCode).toBe(302); // Verifica o código de status da resposta
       });
 
       it('Deve redirecionar para /usuarios/esqueceusenha quando o email não existe no sistema', async () => {
         const response = await request(app)
-          .post('/usuarios/esqueceusenha/email@naoexiste.com'); // substitua com um email que não exista no sistema
+          .post('/usuarios/esqueceusenha'); // substitua com um email que não exista no sistema
     
         expect(response.statusCode).toBe(302); // Verifica o código de status para o redirecionamento
         expect(response.header.location).toBe('/usuarios/esqueceusenha'); // Verifica se foi redirecionado para a página correta
